@@ -38,9 +38,11 @@ void init_simulation(t_simulation* simulation, int argc, const char *argv[])
     else
         simulation->num_meals = -1;
     simulation->dead_flag = 0;
+    free(values);
+    //I m not sure for this free 
 }
 
 void init_philosophers(t_simulation *simulation)
 {
-    
+
 }
