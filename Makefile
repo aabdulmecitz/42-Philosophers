@@ -46,9 +46,9 @@ fclean: clean
 	@echo "$(RED)-== all files have deleted! ==-$(DEFAULT)"
 
 push:
-	git add . && \
-	git commit -m "update: $(shell date)" && \
-	git push
+	@git add . && \
+	@git commit -m "update: $(shell date)" && \
+	@git push
 
 re: fclean all
 

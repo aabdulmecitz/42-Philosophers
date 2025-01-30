@@ -1,0 +1,39 @@
+#include "philo.h"
+
+int **arg_int_values(int argc, const char *argv[])
+{
+    char **value_series_str;
+    int **values;
+    int i;
+
+    value_series_str = argv++;
+    argc--;
+    values = malloc(sizeof(int) * argc);
+    if (!values)
+        return (NULL);
+    i = 0;
+    while (i < argc)
+    {
+        values[i] = ft_atol(value_series_str[i]);
+        i++;
+    }
+}
+
+void init_simulation(t_simulation* simulation, int argc, const char *argv[])
+{
+    t_simulation *simulation;
+    int **values = arg_int_values(argc, argv);
+
+    simulation = (sizeof(t_simulation));
+    if(!simulation)
+        return;
+    simulation->philosophers = NULL;
+    simulation->num_philosophers = values[0];
+    simulation->time_to_die = values[1];
+    simulation->time_to_eat = values[2];
+    simulation->time_to_sleep = values[3];
+    if (argc == 5)
+        simulation->num_meals = values[4];
+    else
+        simulation->num_meals = -1;    
+}
