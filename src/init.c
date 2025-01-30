@@ -14,7 +14,8 @@ int **arg_int_values(int argc, const char *argv[])
     i = 0;
     while (i < argc)
     {
-        values[i] = ft_atol(value_series_str[i]);
+        if (values[i] = ft_atol(value_series_str[i]) <= 0)
+            return(free(values), NULL);
         i++;
     }
 }
@@ -25,7 +26,7 @@ void init_simulation(t_simulation* simulation, int argc, const char *argv[])
     int **values = arg_int_values(argc, argv);
 
     simulation = (sizeof(t_simulation));
-    if(!simulation)
+    if(!simulation && !values)
         return;
     simulation->philosophers = NULL;
     simulation->num_philosophers = values[0];
@@ -35,5 +36,11 @@ void init_simulation(t_simulation* simulation, int argc, const char *argv[])
     if (argc == 5)
         simulation->num_meals = values[4];
     else
-        simulation->num_meals = -1;    
+        simulation->num_meals = -1;
+    simulation->dead_flag = 0;
+}
+
+void init_philosophers(t_simulation *simulation)
+{
+    
 }

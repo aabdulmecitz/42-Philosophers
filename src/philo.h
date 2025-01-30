@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:32 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/01/30 18:07:15 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/01/30 18:19:06 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_simulation
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_meals;
-	bool			dead_flag;
+	bool			*dead_flag;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	meal_mutex;
@@ -49,5 +49,7 @@ typedef struct s_simulation
 }					t_simulation;
 
 long	ft_atol(const char *str);
+void init_simulation(t_simulation* simulation, int argc, const char *argv[]);
+void init_philosophers(t_simulation *simulation);
 
 #endif

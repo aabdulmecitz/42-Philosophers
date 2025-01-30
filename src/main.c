@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:46 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/01/30 17:36:45 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/01/30 18:18:14 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int main(int argc, const char *argv[])
 {
-    
+    t_simulation *simulation;
+
+    init_simulation(simulation, argc, argv);
+    init_philosophers(simulation);
     return 0;
 }
 
