@@ -1,55 +1,55 @@
-FILES = check \
-		philo \
-		utils 
+#Color Codes
 
-BONUS_FILES = philo_bonus
+DEFAULT = \033[0m
+RED     = \033[1;31m
+YELLOW  = \033[1;33m
+GREEN   = \033[1;32m
+BLUE    = \033[1;36m
+ORANGE  = \033[38;5;208m
 
-NAME = philo
-BONUS_NAME = philo_bonus
+FILES				= 
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I
-MFLAGS = -s -j16 -C
-AR = ar rcs
-RM = rm -rf
+NAME				= philo
 
-FILES_PATH = src
-BONUS_PATH = bonus
+CC					= gcc
+CCFLAGS				= -Wall -Wextra -Werror #-fsanitize=thread 
+MAKEFLAGS			= --no-print-directory
+RM					= rm -rf
 
-SRCS = $(addprefix $(FILES_PATH)/, $(addsuffix .c, $(FILES)))
-BONUS = $(addprefix $(BONUS_PATH)/, $(addsuffix .c, $(BONUS_FILES)))
-OBJS = $(SRCS:.c=.o)
-BONUS_OBJS = $(BONUS:.c=.o)
+FILES_PATH			= ./
+OBJ_DIR				= .obj/
 
-.c.o:
-	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+SRCS				= $(addprefix $(FILES_PATH), $(addsuffix .c, $(FILES)))
+OBJS				= $(addprefix $(OBJ_DIR), $(notdir $(SRCS:.c=.o)))
 
-$(NAME): $(OBJS)
-	$(CC) $(OBJS) -o $(NAME)
-	$(RM) $(OBJS) $(BONUS_OBJS)
-
-bonus: $(BONUS_OBJS)
-	$(CC) $(CFLAGS) $(BONUS_OBJS) -o $(BONUS_NAME)
-	$(RM) $(OBJS) $(BONUS_OBJS)
+vpath %.c $(FILES_PATH)
 
 all: $(NAME)
 
-clean:
-	$(RM) $(OBJS) $(BONUS_OBJS)
+$(NAME): $(OBJ_DIR) $(OBJS)
+	@$(CC) $(OBJS) $(CCFLAGS) -o $(NAME)
+	@echo "$(GREEN)-== $(NAME) has created! ==-$(DEFAULT)"
 
-fclean: clean libclean
-	$(RM) $(NAME)
-	$(RM) $(AR_NAME)
-	$(RM) $(CHECKER_NAME)
+$(OBJ_DIR)%.o: %.c
+	@$(CC) $(CCFLAGS) -c -o $@ $<
+
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+	
+clean:
+	@$(RM) $(OBJS)
+	@echo "$(YELLOW)-== all object files have deleted! ==-$(DEFAULT)"
+
+fclean: clean
+	@$(RM) $(NAME)
+	@$(RM) $(OBJ_DIR)
+	@echo "$(RED)-== all files have deleted! ==-$(DEFAULT)"
+
+push:
+	git add . && \
+	git commit -m "update: $(shell date)" && \
+	git push
 
 re: fclean all
 
-push:
-	git add .
-	git commit -m "commit"
-	git push
-
-run: re
-	./$(NAME) <sth>
-
-.PHONY: all clean fclean re bonus push compile_libs update run
+.PHONY: all clean fclean re push
