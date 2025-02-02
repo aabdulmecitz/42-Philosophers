@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:46 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/01/30 18:18:14 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/02 05:02:40 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,17 @@
 
 int main(int argc, const char *argv[])
 {
-    t_simulation *simulation;
-
-    init_simulation(simulation, argc, argv);
-    init_philosophers(simulation);
+    t_data *data;
+    t_philo *philos;
+    pthread_t   *threads;
+    pthread_t   monitor_thread;
+    
+    
+   
+    if (parse_args(argc, argv, data) == 1)
+        return 1;
+    initialize_forks(data);
+    create_philo_threads(data, philos, threads);
     return 0;
 }
 

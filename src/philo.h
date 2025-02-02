@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:32 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/01/30 18:19:06 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/02 05:30:46 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,19 @@
 # define INT_MAX 2147483647
 # define INT_MIN -2147483648
 
+typedef struct s_data
+{
+	int				num_philosophers;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				num_meals;
+	int				*end_simulation;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	print_lock;
+	t_philo			*philosophers;
+}					t_data;
+
 typedef struct s_philo
 {
 	int					id;
@@ -30,26 +43,20 @@ typedef struct s_philo
 	pthread_t			thread;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
-	struct s_simulation	*simulation;
+	struct s_data		*data;
 	
 }					t_philo;
 
-typedef struct s_simulation
-{
-	int				num_philosophers;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				num_meals;
-	bool			*dead_flag;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	write_mutex;
-	pthread_mutex_t	meal_mutex;
-	t_philo			*philosophers;
-}					t_simulation;
 
 long	ft_atol(const char *str);
-void init_simulation(t_simulation* simulation, int argc, const char *argv[]);
-void init_philosophers(t_simulation *simulation);
+int		parse_args(int argc, char *argv[], t_data *t_data);
+void	create_philo_threads(t_data *data, t_philo *philos, pthread_t *threads);
+void	*philo_routine(void *philo);
+void    *monitor_routine(void *arg);
+long	get_time_ms();
+void	custom_sleep(int ms);
+void	print_log(t_philo *philo, char *msg);
+void	err(char *msg);
+
 
 #endif
