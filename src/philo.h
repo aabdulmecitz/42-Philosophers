@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:32 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/04 06:01:25 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/04 13:40:32 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define RED "\033[31m"
 # define GREEN "\032[31m"
 # define YELLOW "\033[33m"
-# define RESET "\033[37m"
+# define RESET "\033[0m"
 
  
 typedef struct s_data
@@ -37,7 +37,8 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_meals;
-	int				*end_simulation;
+	int				end_simulation;
+	long			start_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_lock;
 	struct s_philo *philosophers;

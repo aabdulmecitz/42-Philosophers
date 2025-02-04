@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 05:25:50 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/04 06:20:27 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/04 13:26:06 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ long	ft_atol(const char *str)
 {
 	long	result;
 
-	if (!str)
+	if (str == NULL)
 	{
 		printf("Error: Input string is NULL.\n");
 		return (-1);
@@ -62,6 +62,6 @@ void    custom_sleep(int ms)
 void    print_log(t_philo *philo, char *msg)
 {
     pthread_mutex_lock(&philo->data->print_lock);
-	printf(CYAN"%zu %d %s\n"RESET, get_time_ms(), philo->id, msg);
+	printf(CYAN"%zu %d %s\n"RESET, get_time_ms() - philo->data->start_time, philo->id, msg);
 	pthread_mutex_unlock(&philo->data->print_lock);
 }	

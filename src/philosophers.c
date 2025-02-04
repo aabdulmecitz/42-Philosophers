@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 04:24:23 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/04 05:23:54 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/04 13:41:29 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ static void philo_is_eating(t_philo *philo)
     if (philo->id % 2 == 1)
     {
         pthread_mutex_lock(philo->left_fork);
-        print_log(philo, "is taken left fork");
+        print_log(philo, "is taken a fork");
         pthread_mutex_lock(philo->right_fork);
-        print_log(philo, "is taken right fork");
+        print_log(philo, "is taken a fork");
     }
     else
     {
         pthread_mutex_lock(philo->right_fork);
-        print_log(philo, "is taken right fork");
+        print_log(philo, "is taken a fork");
         pthread_mutex_lock(philo->left_fork);
-        print_log(philo, "is taken left fork");
+        print_log(philo, "is taken a fork");
     }
 }
 
@@ -35,7 +35,7 @@ void	*philo_routine(void *arg)
 	t_philo *philo;
 
 	philo = (t_philo *)arg;
-	while (1)
+	while (philo->data->end_simulation == 0)
 	{
 		print_log(philo, "is thinking");
 		philo_is_eating(philo);
@@ -55,26 +55,24 @@ void	*philo_routine(void *arg)
 void    *monitor_routine(void *arg)
 {
     t_data *params;
-    
+    int i;
     params = (t_data *)arg;
-    if (!params->end_simulation)
+    while ((params->end_simulation) == 0)
     {
-        int i;
-
         i = 0;
-        while (i++ < params->num_philosophers)
+        while (i < params->num_philosophers)
         {
             if (get_time_ms() - params->philosophers[i].last_meal_time > \
 params->time_to_die)
             {
-                print_log(&params->philosophers[i],"died");
-                *params->end_simulation = 1;
+                print_log(&(params->philosophers[i]),"died");
+                (params->end_simulation) = 1;
                 return (NULL);
             }
             if (params->num_meals > 0 && 
             params->philosophers[i].meals_eaten >= params->num_meals)
             {
-                *params->end_simulation = 1;
+                (params->end_simulation) = 1;
                 return (NULL);
             }
             

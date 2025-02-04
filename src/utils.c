@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:42 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/04 06:19:08 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/04 13:39:50 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@ int	parse_args(char *argv[], t_data *data)
 	data->time_to_die = ft_atol(argv[2]);
 	data->time_to_eat = ft_atol(argv[3]);
 	data->time_to_sleep = ft_atol(argv[4]);
+	// if (argc == 6)
+	// {
+	// 	/* code */
+	// 	// num meals burada çekecez yazılmamışsa num meals 0;
+	// 	// structlar ayarlanacak unutma
+		
+	// }
 	data->num_meals = ft_atol(argv[5]);
 	if (data->num_philosophers != -1 || data->time_to_die != -1 || 
 		data->time_to_eat != -1 || data->time_to_sleep != -1 ||
@@ -46,7 +53,8 @@ void	create_philo_threads(t_data *data, t_philo *philos, pthread_t *threads)
 	int	i;
 
 	i = 0;
-	while (i++ < data->num_philosophers)
+	data->start_time = get_time_ms();
+	while (i < data->num_philosophers)
 	{
 		philos[i].id = i + 1;
 		philos[i].left_fork = &data->forks[i];
@@ -55,6 +63,7 @@ void	create_philo_threads(t_data *data, t_philo *philos, pthread_t *threads)
 		philos[i].last_meal_time = get_time_ms();
 		philos[i].meals_eaten = 0;
 		pthread_create(&threads[i], NULL, philo_routine, &philos[i]);
+		i++;
 	}
 }
 
