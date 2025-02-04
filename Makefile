@@ -16,16 +16,16 @@ RM        = rm -rf
 MAKEFLAGS += --no-print-directory
 
 SRCS      = $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
-OBJS      = $(addsuffix .o, $(FILES))
+OBJS      = $(addprefix $(SRC_DIR), $(addsuffix .o, $(FILES)))
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@echo "$(GREEN)-== $(NAME) compiled successfully! ==-$(DEFAULT)"
-	@$(RM) $(OBJS) # Derleme tamamlanınca obj dosyalarını sil
+	@$(RM) $(OBJS)
 
-%.o: $(SRC_DIR)%.c
+$(SRC_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(BLUE)Compiling: $< $(DEFAULT)"
 
