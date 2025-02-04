@@ -1,54 +1,50 @@
-#Color Codes
+# Color Codes
+DEFAULT  = \033[0m
+RED      = \033[1;31m
+YELLOW   = \033[1;33m
+GREEN    = \033[1;32m
+BLUE     = \033[1;36m
+ORANGE   = \033[38;5;208m
 
-DEFAULT = \033[0m
-RED     = \033[1;31m
-YELLOW  = \033[1;33m
-GREEN   = \033[1;32m
-BLUE    = \033[1;36m
-ORANGE  = \033[38;5;208m
+SRC_DIR   = src/
+NAME      = philo
+FILES     = main philosophers sth utils
 
-FILES				= 
+CC        = gcc
+CFLAGS    = -Wall -Wextra -Werror #-fsanitize=thread
+RM        = rm -rf
+MAKEFLAGS += --no-print-directory
 
-NAME				= philo
-
-CC					= gcc
-CCFLAGS				= -Wall -Wextra -Werror #-fsanitize=thread 
-MAKEFLAGS			= --no-print-directory
-RM					= rm -rf
-
-FILES_PATH			= ./
-OBJ_DIR				= .obj/
-
-SRCS				= $(addprefix $(FILES_PATH), $(addsuffix .c, $(FILES)))
-OBJS				= $(addprefix $(OBJ_DIR), $(notdir $(SRCS:.c=.o)))
-
-vpath %.c $(FILES_PATH)
+SRCS      = $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
+OBJS      = $(addprefix $(SRC_DIR), $(addsuffix .o, $(FILES)))
 
 all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJS)
-	@$(CC) $(OBJS) $(CCFLAGS) -o $(NAME)
-	@echo "$(GREEN)-== $(NAME) has created! ==-$(DEFAULT)"
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	@echo "$(GREEN)-== $(NAME) compiled successfully! ==-$(DEFAULT)"
 
-$(OBJ_DIR)%.o: %.c
-	@$(CC) $(CCFLAGS) -c -o $@ $<
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "$(BLUE)Compiling: $< $(DEFAULT)"
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
-	
+	@echo "$(ORANGE)Created object directory: $(OBJ_DIR)$(DEFAULT)"
+
 clean:
-	@$(RM) $(OBJS)
-	@echo "$(YELLOW)-== all object files have deleted! ==-$(DEFAULT)"
+	@$(RM) $(OBJ_DIR)
+	@echo "$(YELLOW)-== All object files removed! ==-$(DEFAULT)"
 
 fclean: clean
 	@$(RM) $(NAME)
-	@$(RM) $(OBJ_DIR)
-	@echo "$(RED)-== all files have deleted! ==-$(DEFAULT)"
+	@echo "$(RED)-== $(NAME) removed! ==-$(DEFAULT)"
 
 push:
 	@git add . && \
-	@git commit -m "update: $(shell date)" && \
-	@git push
+	git commit -m "Update: `date '+%Y-%m-%d %H:%M:%S'`" && \
+	git push
+	@echo "$(GREEN)-== Code pushed to GitHub! ==-$(DEFAULT)"
 
 re: fclean all
 

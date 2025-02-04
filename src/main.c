@@ -6,25 +6,36 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:46 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/02 05:02:40 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/04 05:20:19 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int main(int argc, const char *argv[])
+int main(int argc, char *argv[])
 {
     t_data *data;
     t_philo *philos;
     pthread_t   *threads;
-    pthread_t   monitor_thread;
+    pthread_t   *monitor_thread;
+    int i;
     
-    
-   
+   	data = malloc(sizeof(t_data));
+	if (!data)
+		return(0);
     if (parse_args(argc, argv, data) == 1)
         return 1;
     initialize_forks(data);
+    philos = malloc(sizeof(t_philo) * data->num_philosophers);
+	threads = malloc(sizeof(pthread_t) * data->num_philosophers);
+    monitor_thread = malloc(sizeof(pthread_t));
     create_philo_threads(data, philos, threads);
+    pthread_create(monitor_thread, NULL, monitor_routine, data);
+    i = 0;
+    while (i++ < data->num_philosophers)
+        pthread_join(threads[i], NULL);
+    pthread_join(*monitor_thread, NULL);
+    
     return 0;
 }
 

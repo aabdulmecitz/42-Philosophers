@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 05:25:50 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/02 05:34:41 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/04 05:28:20 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,32 @@ long	ft_atol(const char *str)
             return (-1);
 		str++;
 	}
-    if (result <= INT_MIN || result >= INT_MAX)
-        return (-1);
 	return (result);
 }
 
 long    get_time_ms()
 {
-    
+    struct timeval *tv;
+	long	result;
+	tv = malloc(sizeof(struct timeval));
+	gettimeofday(tv, NULL);
+	result = (tv->tv_sec * 1000) + (tv->tv_usec / 1000);
+	free(tv);
+	return result;
 }
 
 void    custom_sleep(int ms)
 {
-    
+    long	start;
+
+	start = get_time_ms();
+	while (get_time_ms() - start < ms)
+		usleep(100);
 }
 
 void    print_log(t_philo *philo, char *msg)
 {
-    
-}
-
-void    err(char *msg)
-{
-    
-}
+    pthread_mutex_lock(&philo->data->print_lock);
+	printf(CYAN"%zu %d %s"RESET, get_time_ms(), philo->id, msg);
+	pthread_mutex_unlock(&philo->data->print_lock);
+}	

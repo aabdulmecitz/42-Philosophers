@@ -6,15 +6,14 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:42 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/02 05:32:49 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/04 05:29:15 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	parse_args(int argc, char *argv[], t_data *data)
+int	parse_args(char *argv[], t_data *data)
 {
-	data = malloc(sizeof(t_data));
 	data->end_simulation = 0;
 	data->num_philosophers = ft_atol(argv[1]);
 	data->time_to_die = ft_atol(argv[2]);
@@ -40,13 +39,9 @@ void	initialize_forks(t_data *data)
 
 void	create_philo_threads(t_data *data, t_philo *philos, pthread_t *threads)
 {
-	t_philo *philos;
-	pthread_t *threads;
 	int	i;
 
 	i = 0;
-	philos = malloc(sizeof(t_philo) * data->num_philosophers);
-	threads = malloc(sizeof(pthread_t) * data->num_philosophers);
 	while (i++ < data->num_philosophers)
 	{
 		philos[i].id = i + 1;
@@ -57,16 +52,6 @@ void	create_philo_threads(t_data *data, t_philo *philos, pthread_t *threads)
 		philos[i].meals_eaten = 0;
 		pthread_create(&threads[i], NULL, philo_routine, &philos[i]);
 	}
-	
+	return (NULL);
 }
 
-void	*philo_routine(void *philo)
-{
-	
-}
-
-
-void    *monitor_routine(void *arg)
-{
-    
-}
