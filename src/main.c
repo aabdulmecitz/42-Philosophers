@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:46 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/04 05:20:19 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/04 06:00:58 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,14 @@ int main(int argc, char *argv[])
     pthread_t   *monitor_thread;
     int i;
     
+    if (argc < 5 || argc > 6)
+    {
+        return 1;
+    }
    	data = malloc(sizeof(t_data));
 	if (!data)
 		return(0);
-    if (parse_args(argc, argv, data) == 1)
+    if (parse_args(argv, data) == 1)
         return 1;
     initialize_forks(data);
     philos = malloc(sizeof(t_philo) * data->num_philosophers);

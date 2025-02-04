@@ -16,24 +16,21 @@ RM        = rm -rf
 MAKEFLAGS += --no-print-directory
 
 SRCS      = $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
-OBJS      = $(addprefix $(SRC_DIR), $(addsuffix .o, $(FILES)))
+OBJS      = $(addsuffix .o, $(FILES))
 
 all: $(NAME)
 
-$(NAME): $(OBJ_DIR) $(OBJS)
+$(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@echo "$(GREEN)-== $(NAME) compiled successfully! ==-$(DEFAULT)"
+	@$(RM) $(OBJS) # Derleme tamamlanınca obj dosyalarını sil
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(BLUE)Compiling: $< $(DEFAULT)"
 
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
-	@echo "$(ORANGE)Created object directory: $(OBJ_DIR)$(DEFAULT)"
-
 clean:
-	@$(RM) $(OBJ_DIR)
+	@$(RM) $(OBJS)
 	@echo "$(YELLOW)-== All object files removed! ==-$(DEFAULT)"
 
 fclean: clean
