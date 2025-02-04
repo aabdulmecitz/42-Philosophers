@@ -11,7 +11,7 @@ NAME      = philo
 FILES     = main philosophers sth utils
 
 CC        = gcc
-CFLAGS    = -Wall -Wextra -Werror #-fsanitize=thread
+CFLAGS    = -Wall -Wextra -Werror #-fsanitize=address
 RM        = rm -rf
 MAKEFLAGS += --no-print-directory
 
@@ -21,7 +21,7 @@ OBJS      = $(addprefix $(SRC_DIR), $(addsuffix .o, $(FILES)))
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -g
 	@echo "$(GREEN)-== $(NAME) compiled successfully! ==-$(DEFAULT)"
 	@$(RM) $(OBJS)
 

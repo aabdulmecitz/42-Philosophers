@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:46 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/04 06:00:58 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/04 06:22:21 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,12 @@ int main(int argc, char *argv[])
     create_philo_threads(data, philos, threads);
     pthread_create(monitor_thread, NULL, monitor_routine, data);
     i = 0;
-    while (i++ < data->num_philosophers)
+    while (i < data->num_philosophers)
+    {
+        printf(RED"HERE\n"RESET);
         pthread_join(threads[i], NULL);
+        i++;
+    }
     pthread_join(*monitor_thread, NULL);
     
     return 0;

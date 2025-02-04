@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:42 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/04 06:02:13 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/04 06:19:08 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	parse_args(char *argv[], t_data *data)
 	if (data->num_philosophers != -1 || data->time_to_die != -1 || 
 		data->time_to_eat != -1 || data->time_to_sleep != -1 ||
 		data->num_meals != 1)
-		return 1;
-	return 0;
+		return 0;
+	return 1;
 }
 
 void	initialize_forks(t_data *data)
@@ -33,8 +33,11 @@ void	initialize_forks(t_data *data)
 
 	i = 0;
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philosophers);
-	while (i++ < data->num_philosophers)
-		pthread_mutex_init(&data->forks[i], NULL);
+	while (i < data->num_philosophers)
+	{
+    	pthread_mutex_init(&data->forks[i], NULL);
+		i++;
+	}
 	pthread_mutex_init(&data->print_lock, NULL);	
 }
 
