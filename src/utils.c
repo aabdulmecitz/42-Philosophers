@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:42 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/04 05:29:15 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/04 06:02:13 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	parse_args(char *argv[], t_data *data)
 	if (data->num_philosophers != -1 || data->time_to_die != -1 || 
 		data->time_to_eat != -1 || data->time_to_sleep != -1 ||
 		data->num_meals != 1)
-		return 1;	
+		return 1;
+	return 0;
 }
 
 void	initialize_forks(t_data *data)
@@ -47,11 +48,10 @@ void	create_philo_threads(t_data *data, t_philo *philos, pthread_t *threads)
 		philos[i].id = i + 1;
 		philos[i].left_fork = &data->forks[i];
 		philos[i].right_fork = &data->forks[(i + 1) % data->num_philosophers];
-		philos[i].data = &data;
+		philos[i].data = data;
 		philos[i].last_meal_time = get_time_ms();
 		philos[i].meals_eaten = 0;
 		pthread_create(&threads[i], NULL, philo_routine, &philos[i]);
 	}
-	return (NULL);
 }
 
