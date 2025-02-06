@@ -6,37 +6,39 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 05:25:50 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/06 19:36:24 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/06 20:27:57 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	ft_atol(const char *str)
-{
-	long	result;
+#include <stdio.h>
+#include <limits.h>
 
-	if (str == NULL)
-	{
-		printf("Error: Input string is NULL.\n");
-		return (-1);
-	}
-	if (*str == '+')
-		str++;
-	if (*str < '0' || *str > '9')
-	{
-		printf("Error: Input contains invalid characters.\n");
-		return (-1);
-	}
-	result = 0;
-	while (*str && (*str >= '0' && *str <= '9'))
-	{
-		result = (result * 10) + (*str - '0');
-        if (result <= INT_MIN || result >= INT_MAX)
-            return (-1);
-		str++;
-	}
-	return (result);
+int is_digit(char c) {
+    return (c >= '0' && c <= '9');
+}
+
+long ft_atol(const char *str) {
+    long result = 0;
+    int is_negative = 0;
+
+    if (!str || *str == '\0')
+        return (printf("Error: Input string is NULL or empty.\n"), -1);
+    if (*str == '-' || *str == '+') {
+        if (*str == '-') is_negative = 1;
+        str++;
+    }
+    if (!is_digit(*str))
+        return (printf("Error: Input contains invalid characters.\n"), -1);
+    while (*str && is_digit(*str)) {
+        result = (result * 10) + (*str - '0');
+        if ((!is_negative && result > INT_MAX) || 
+            (is_negative && -result < INT_MIN))
+            return (printf("Error: Integer overflow.\n"), -1);
+        str++;
+    }
+    return is_negative ? -result : result;
 }
 
 long    get_time_ms()
