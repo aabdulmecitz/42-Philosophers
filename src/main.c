@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:46 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/06 20:04:48 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/06 21:06:34 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ int main(int argc, char *argv[])
     pthread_t threads[PHILO_MAX];
     int i;
 
+
     if (argc < 5 || argc > 6)
     {
         printf("Error: Incorrect number of arguments.\n");
         return (1);
     }
     if (parse_args(argc, argv, &data) == 1)
-        return (1); // Eğer argümanlar geçerli değilse, programı sonlandır
+        return (1);
     initialize_forks(&data);
     allocate_resources(&data, &philos);
     data.end_simulation = 0;
@@ -56,7 +57,7 @@ int main(int argc, char *argv[])
     }
     pthread_join(monitor_thread, NULL);
     free_resources(philos);
-    return (0); // Başarıyla sonlandır
+    return (0);
 }
 
 // ./philo <number_of_philosophers> <time_to_die> <time_to_eat> <time_to_sleep> ?<number_of_times_each_philosopher_must_eat>

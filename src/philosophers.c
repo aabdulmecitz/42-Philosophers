@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 04:24:23 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/06 17:34:01 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/06 21:10:40 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void philo_is_eating(t_philo *philo)
 void	*philo_routine(void *arg)
 {
 	t_philo *philo;
-
 	philo = (t_philo *)arg;
 	while (philo->data->end_simulation == 0)
 	{
@@ -54,28 +53,27 @@ void	*philo_routine(void *arg)
 
 void    *monitor_routine(void *arg)
 {
-    t_data *params;
+    t_data *data;
     int i;
-    params = (t_data *)arg;
-    while ((params->end_simulation) == 0)
+    data = (t_data *)arg;
+    while ((data->end_simulation) == 0)
     {
         i = 0;
-        while (i < params->num_philosophers)
+        while (i < data->num_philosophers)
         {
-            if (get_time_ms() - params->philosophers[i].last_meal_time > \
-params->time_to_die)
+            if (get_time_ms() - data->philosophers[i].last_meal_time > \
+data->time_to_die)
             {
-                print_log(&(params->philosophers[i]),"died");
-                (params->end_simulation) = 1;
-                return (exit(0), NULL);
-            }
-            if (params->num_meals > 0 && 
-            params->philosophers[i].meals_eaten >= params->num_meals)
-            {
-                (params->end_simulation) = 1;
+                print_log(&(data->philosophers[i]),"died");
+                (data->end_simulation) = 1;
                 return (NULL);
             }
-            
+            if (data->num_meals > 0 && 
+            data->philosophers[i].meals_eaten >= data->num_meals)
+            {
+                (data->end_simulation) = 1;
+                return (NULL);
+            }
             i++;
         }
         usleep(1000);

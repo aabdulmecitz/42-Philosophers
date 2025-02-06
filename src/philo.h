@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:32 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/06 19:47:40 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/06 20:57:13 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@
 # define INT_MIN -2147483648
 
 // Colors
-# define CYAN   "\033[36m"
-# define RED    "\033[31m"
-# define GREEN  "\033[32m"  // Yanlış tanımlamayı düzelttim
-# define YELLOW "\033[33m"
+# define CYAN   "\033[1;36m"
+# define RED    "\033[1;31m"
+# define GREEN  "\033[1;32m"
+# define YELLOW "\033[1;33m"
 # define RESET  "\033[0m"
 
 typedef struct s_data
