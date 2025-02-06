@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:42 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/06 17:21:32 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/06 18:28:52 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	parse_args(int argc, char *argv[], t_data *data)
 		printf("ERROR: Something going wrong you have to 4 or 5 input.");
 	if (data->num_philosophers != -1 || data->time_to_die != -1 || 
 		data->time_to_eat != -1 || data->time_to_sleep != -1)
-		return 0;
+		return (0);
 	return 1;
 }
 
