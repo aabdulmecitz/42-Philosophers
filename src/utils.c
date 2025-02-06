@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:42 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/06 18:28:52 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/06 19:39:46 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,3 @@ void	create_philo_threads(t_data *data, t_philo *philos, pthread_t *threads)
 		i++;
 	}
 }
-

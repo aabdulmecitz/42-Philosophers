@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:32 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/06 17:16:23 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/06 19:34:53 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ void	initialize_forks(t_data *data);
 long	get_time_ms();
 void	custom_sleep(int ms);
 void	print_log(t_philo *philo, char *msg);
-
+void init_philos(t_philo *philos, t_data data);
 
 #endif

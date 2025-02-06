@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:46 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/06 18:33:26 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/06 19:40:20 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     pthread_t   *threads;
     pthread_t   monitor_thread;
     int i;
-//t_datayı *'ını çıkar ve  fonksiyonlara &data koycaz freeye gerek kalmicak
+
     if (argc < 5 || argc > 6)
     {
         return 1;
@@ -37,7 +37,6 @@ int main(int argc, char *argv[])
     while (i < data.num_philosophers)
     {
         pthread_join(threads[i], NULL);
-        //printf(RED"HERE\n"RESET);
         i++;
     }
     pthread_join(monitor_thread, NULL);
