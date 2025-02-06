@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:46 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/04 13:41:37 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/06 17:28:02 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ int main(int argc, char *argv[])
     {
         return 1;
     }
-
-    if (parse_args(argv, &data) == 1)
+    if (parse_args(argc, argv, &data) == 1)
         return 1;
     initialize_forks(&data);
     philos = malloc(sizeof(t_philo) * data.num_philosophers);

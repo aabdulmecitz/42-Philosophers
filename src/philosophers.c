@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 04:24:23 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/04 13:41:29 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/06 17:34:01 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ params->time_to_die)
             {
                 print_log(&(params->philosophers[i]),"died");
                 (params->end_simulation) = 1;
-                return (NULL);
+                return (exit(0), NULL);
             }
             if (params->num_meals > 0 && 
             params->philosophers[i].meals_eaten >= params->num_meals)

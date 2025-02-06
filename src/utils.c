@@ -6,30 +6,27 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:42 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/04 13:39:50 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/06 17:21:32 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	parse_args(char *argv[], t_data *data)
+int	parse_args(int argc, char *argv[], t_data *data)
 {
 	data->end_simulation = 0;
 	data->num_philosophers = ft_atol(argv[1]);
 	data->time_to_die = ft_atol(argv[2]);
 	data->time_to_eat = ft_atol(argv[3]);
 	data->time_to_sleep = ft_atol(argv[4]);
-	// if (argc == 6)
-	// {
-	// 	/* code */
-	// 	// num meals burada çekecez yazılmamışsa num meals 0;
-	// 	// structlar ayarlanacak unutma
-		
-	// }
-	data->num_meals = ft_atol(argv[5]);
+	if (argc == 6)
+		data->num_meals = ft_atol(argv[5]);
+	else if (argc == 5)
+		data->num_meals = 0;
+	else
+		printf("ERROR: Something going wrong you have to 4 or 5 input.");
 	if (data->num_philosophers != -1 || data->time_to_die != -1 || 
-		data->time_to_eat != -1 || data->time_to_sleep != -1 ||
-		data->num_meals != 1)
+		data->time_to_eat != -1 || data->time_to_sleep != -1)
 		return 0;
 	return 1;
 }

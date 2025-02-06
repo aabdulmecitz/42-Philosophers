@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:32 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/04 13:40:32 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/06 17:16:23 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_philo
 
 
 long	ft_atol(const char *str);
-int		parse_args(char *argv[], t_data *data);
+int		parse_args(int argc, char *argv[], t_data *data);
 void	create_philo_threads(t_data *data, t_philo *philos, pthread_t *threads);
 void	*philo_routine(void *arg);
 void    *monitor_routine(void *arg);
