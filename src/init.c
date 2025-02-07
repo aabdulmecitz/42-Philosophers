@@ -23,7 +23,6 @@ void	initialize_forks(t_data *data)
     	pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
-	pthread_mutex_init(&data->print_lock, NULL);
 }
 
 static int parse_error_check(t_data *data)
@@ -47,7 +46,8 @@ int init_vars(int argc, char *argv[], t_data *data)
 	data->time_to_die = ft_atol(argv[2]);
 	data->time_to_eat = ft_atol(argv[3]);
 	data->time_to_sleep = ft_atol(argv[4]);
-    parse_error_check(data);
+    if (parse_error_check(data))
+        return 1;
     if (argc == 6)
 	{
 		data->num_meals = ft_atol(argv[5]);
@@ -89,7 +89,7 @@ int create_philos(t_data *data)
             return -1;
 		i++;
 	}
-    pthread_create(&monitor_thread, NULL, monitor_routine, &data);
+    pthread_create(&monitor_thread, NULL, monitor_routine, data);
     i = -1;
 	while (++i < data->num_philosophers)
 		if (pthread_join(data->philosophers[i].thread, NULL) != 0)

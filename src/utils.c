@@ -16,12 +16,11 @@
 
 long    get_time_ms()
 {
-    struct timeval *tv;
+    struct timeval tv;
 	long	result;
-	tv = malloc(sizeof(struct timeval));
-	gettimeofday(tv, NULL);
-	result = (tv->tv_sec * 1000) + (tv->tv_usec / 1000);
-	free(tv);
+    
+	gettimeofday(&tv, NULL);
+	result = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 	return result;
 }
 

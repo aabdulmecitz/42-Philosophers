@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 {
     t_data data;
     
-    if (argc != 5 || argc != 6)
+    if (argc != 5 && argc != 6)
         return 0;
     if (init_vars(argc, argv, &data) == 1)
         return (free(data.philosophers), 0); 

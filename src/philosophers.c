@@ -67,14 +67,12 @@ data->time_to_die)
                 print_log(&(data->philosophers[i]),"died");
                 (data->end_simulation) = 1;
                 break;
-                return (NULL);
             }
             if (data->num_meals > 0 && 
             data->philosophers[i].meals_eaten >= data->num_meals)
             {
                 (data->end_simulation) = 1;
                 break;
-                return (NULL);
             }
             i++;
         }
