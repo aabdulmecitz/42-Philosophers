@@ -6,69 +6,37 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:42 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/06 20:56:20 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/07 18:39:28 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	parse_args(int argc, char *argv[], t_data *data)
+#include <limits.h>
+
+long    get_time_ms()
 {
-	data->end_simulation = 0;
-	data->num_philosophers = ft_atol(argv[1]);
-	if (data->num_philosophers <= 0)
-		return (printf("Error: Num of philos must be a positive int.\n"), 1);
-	data->time_to_die = ft_atol(argv[2]);
-	if (data->time_to_die <= 0)
-		return (printf("Error: Time to die must be a positive int.\n"), 1);
-	data->time_to_eat = ft_atol(argv[3]);
-	if (data->time_to_eat <= 0)
-		return (printf("Error: Time to eat must be a positive int.\n"), 1);
-	data->time_to_sleep = ft_atol(argv[4]);
-	if (data->time_to_sleep <= 0)
-		return (printf("Error: Time to sleep must be a positive int.\n"), 1);
-	if (argc == 6)
-	{
-		data->num_meals = ft_atol(argv[5]);
-		if (data->num_meals <= 0)
-			return (printf("Error: Num of meals must be a positive int.\n"), 1);
-	}
-	else if (argc == 5)
-		data->num_meals = 0;
-	else
-		return (printf("ERROR: Incorrect number of arguments.\n"), 1);
-	return (0);
+    struct timeval *tv;
+	long	result;
+	tv = malloc(sizeof(struct timeval));
+	gettimeofday(tv, NULL);
+	result = (tv->tv_sec * 1000) + (tv->tv_usec / 1000);
+	free(tv);
+	return result;
 }
 
-void	initialize_forks(t_data *data)
+void    custom_sleep(int ms)
 {
-	int i;
+    long	start;
 
-	i = 0;
-	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philosophers);
-	while (i < data->num_philosophers)
-	{
-    	pthread_mutex_init(&data->forks[i], NULL);
-		i++;
-	}
-	pthread_mutex_init(&data->print_lock, NULL);	
+	start = get_time_ms();
+	while (get_time_ms() - start < ms)
+		usleep(100);
 }
 
-void	create_philo_threads(t_data *data, t_philo *philos, pthread_t *threads)
+void    print_log(t_philo *philo, char *msg)
 {
-	int	i;
-
-	i = 0;
-	data->start_time = get_time_ms();
-	while (i < data->num_philosophers)
-	{
-		philos[i].id = i + 1;
-		philos[i].left_fork = &data->forks[i];
-		philos[i].right_fork = &data->forks[(i + 1) % data->num_philosophers];
-		philos[i].data = data;
-		philos[i].last_meal_time = get_time_ms();
-		philos[i].meals_eaten = 0;
-		pthread_create(&threads[i], NULL, philo_routine, &philos[i]);
-		i++;
-	}
-}
+    pthread_mutex_lock(&philo->data->print_lock);
+	printf(CYAN"%zu %d %s\n"RESET, get_time_ms() - philo->data->start_time, philo->id, msg);
+	pthread_mutex_unlock(&philo->data->print_lock);
+}	

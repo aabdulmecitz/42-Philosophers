@@ -8,7 +8,7 @@ ORANGE   = \033[38;5;208m
 
 SRC_DIR   = src/
 NAME      = philo
-FILES     = main philosophers sth utils
+FILES     = main philosophers init libft utils
 
 CC        = gcc
 CFLAGS    = -Wall -Wextra -Werror #-fsanitize=address

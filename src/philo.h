@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:32 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/06 20:57:13 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/07 19:00:28 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,26 +55,13 @@ typedef struct s_philo
 	struct s_data		*data;
 }					t_philo;
 
-// Utility Functions
-long	ft_atol(const char *str);
-long	get_time_ms();
-void	custom_sleep(int ms);
-
-// Initialization Functions
-int		parse_args(int argc, char *argv[], t_data *data);
+int init_vars(int argc, char *argv[], t_data *data);
+int create_philos(t_data *data);
+long ft_atol(const char *str);
 void	initialize_forks(t_data *data);
-void	init_philos(t_philo *philos, t_data *data);
-
-// Thread Management
-void	create_philo_threads(t_data *data, t_philo *philos, pthread_t *threads);
 void	*philo_routine(void *arg);
-void	*monitor_routine(void *arg);
-
-// Logging
-void	print_log(t_philo *philo, char *msg);
-
-// Memory Management
-void	allocate_resources(t_data *data, t_philo **philos);
-void	free_resources(t_philo *philos);
-
+void    *monitor_routine(void *arg);
+void    print_log(t_philo *philo, char *msg);
+void    custom_sleep(int ms);
+long    get_time_ms();
 #endif
