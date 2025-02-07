@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:46 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/06 21:06:34 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/07 17:38:54 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void allocate_resources(t_data *data, t_philo **philos)
     if (!*philos)
     {
         printf(RED "Memory allocation failed for philosophers!\n" RESET);
-        exit(1);
+        return;
     }
     data->philosophers = *philos;
 }
