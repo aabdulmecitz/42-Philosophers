@@ -17,16 +17,16 @@ static void philo_is_eating(t_philo *philo)
     if (philo->id % 2 == 1)
     {
         pthread_mutex_lock(philo->left_fork);
-        print_log(philo, "is taken a fork");
+        print_log(philo, "has taken a fork");
         pthread_mutex_lock(philo->right_fork);
-        print_log(philo, "is taken a fork");
+        print_log(philo, "has taken a fork");
     }
     else
     {
         pthread_mutex_lock(philo->right_fork);
-        print_log(philo, "is taken a fork");
+        print_log(philo, "has taken a fork");
         pthread_mutex_lock(philo->left_fork);
-        print_log(philo, "is taken a fork");
+        print_log(philo, "has taken a fork");
     }
 }
 
@@ -34,16 +34,32 @@ void	*philo_routine(void *arg)
 {
 	t_philo *philo;
 	philo = (t_philo *)arg;
-	while (philo->data->end_simulation == 0)
+	
+	if (philo->id % 2 == 0)
+		usleep(1000);
+		
+	while (!philo->data->end_simulation)
 	{
 		print_log(philo, "is thinking");
 		philo_is_eating(philo);
+		
+		if (philo->data->end_simulation)
+		{
+		    pthread_mutex_unlock(philo->left_fork);
+		    pthread_mutex_unlock(philo->right_fork);
+		    break;
+		}
+		
 		print_log(philo, "is eating");
 		philo->last_meal_time = get_time_ms();
 		philo->meals_eaten++;
 		custom_sleep(philo->data->time_to_eat);
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
+		
+		if (philo->data->end_simulation)
+		    break;
+		    
 		print_log(philo, "is sleeping");
 		custom_sleep(philo->data->time_to_sleep);
 	}
@@ -69,6 +85,12 @@ void    *monitor_routine(void *arg)
                     data->philosophers[i].id);
                 data->end_simulation = 1;
                 pthread_mutex_unlock(&data->print_lock);
+                
+                // Tüm filozofların thread'lerini bekle
+                for (int j = 0; j < data->num_philosophers; j++)
+                {
+                    pthread_join(data->philosophers[j].thread, NULL);
+                }
                 return (NULL);
             }
             i++;
