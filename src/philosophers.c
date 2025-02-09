@@ -81,22 +81,28 @@ void    *monitor_routine(void *arg)
             if (get_time_ms() - data->philosophers[i].last_meal_time > data->time_to_die)
             {
                 pthread_mutex_lock(&data->print_lock);
+                data->end_simulation = 1;  // Önce flag'i set et
                 printf(RED"%ld %d died\n"RESET, get_time_ms() - data->start_time, 
                     data->philosophers[i].id);
-                data->end_simulation = 1;
                 pthread_mutex_unlock(&data->print_lock);
                 
-                // Tüm filozofların thread'lerini bekle
-                for (int j = 0; j < data->num_philosophers; j++)
+                // Tüm filozofların işlerini bitirmesini bekle
+                while (1)
                 {
-                    pthread_join(data->philosophers[j].thread, NULL);
+                    int all_done = 1;
+                    for (int j = 0; j < data->num_philosophers; j++)
+                    {
+                        if (pthread_join(data->philosophers[j].thread, NULL) == 0)
+                            all_done = 0;
+                    }
+                    if (all_done)
+                        break;
+                    usleep(1000);
                 }
                 return (NULL);
             }
             i++;
         }
-        if (data->end_simulation)
-            return (NULL);
         usleep(100);
     }
     return (NULL);
