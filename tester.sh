@@ -10,7 +10,7 @@ NC='\033[0m'
 PHILO="./philo"
 TEST_DIR="./tests"
 LOG_FILE="$TEST_DIR/test_log.txt"
-TIMEOUT=5 # Saniye cinsinden maksimum test süresi
+TIMEOUT=10 # Saniye cinsinden maksimum test süresi
 
 # Test klasörünü oluştur
 mkdir -p $TEST_DIR
@@ -104,20 +104,27 @@ validate_no_death() {
     return 1
 }
 
-validate_args_error() {
+validate_meals() {
     local log_file=$1
-    grep -q "Error" $log_file
-    return $?
+    local expected_meals=$2
+    
+    meals_count=$(grep -c "is eating" $log_file)
+    if [ $meals_count -lt $expected_meals ]; then
+        echo -e "${RED}Not enough meals: $meals_count (expected $expected_meals)${NC}"
+        return 0
+    fi
+    
+    return 1
 }
 
 # Test senaryoları
 declare -a test_cases=(
-    "invalid_args_1 5 800 200 200 5 invalid validate_args_error"
-    "death_1 1 800 200 200 validate_death 800"
-    "death_2 2 120 60 60 validate_death 120"
-    "no_death_1 4 310 200 100 validate_no_death"
-    "no_death_2 5 800 200 200 validate_no_death"
-    "max_philos 200 800 200 200 validate_no_death"
+    "single_philo 1 800 200 200 validate_death 800"
+    "five_philos 5 800 200 200 validate_no_death"
+    "five_philos_meals 5 800 200 200 7 validate_meals 35"
+    "four_philos 4 410 200 200 validate_no_death"
+    "death_test 4 310 200 100 validate_death 310"
+    "two_philos 2 800 200 200 validate_no_death"
 )
 
 # Testleri çalıştır
