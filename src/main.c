@@ -38,10 +38,7 @@ int main(int argc, char *argv[])
     if (create_philos(&data) == -1)
         return (1);
         
-    // Kısa bir bekleme ekle
     usleep(100);
-    
-    // Temizlik yap
     all_destroy(&data);
     return (0);
 }

@@ -76,6 +76,8 @@ int create_philos(t_data *data)
     initialize_forks(data);
     
     data->start_time = get_time_ms();
+    if (pthread_create(&monitor_thread, NULL, monitor_routine, data))
+        return -1;
     
     while (i < data->num_philosophers)
     {
@@ -88,11 +90,9 @@ int create_philos(t_data *data)
         if (pthread_create(&data->philosophers[i].thread, NULL, \
                 &philo_routine, &(data->philosophers[i])))
             return -1;
+        pthread_detach(data->philosophers[i].thread);
         i++;
     }
-
-    if (pthread_create(&monitor_thread, NULL, monitor_routine, data))
-        return -1;
     
     pthread_join(monitor_thread, NULL);
     

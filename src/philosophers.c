@@ -17,16 +17,16 @@ static void philo_is_eating(t_philo *philo)
     if (philo->id % 2 == 1)
     {
         pthread_mutex_lock(philo->left_fork);
-        print_log(philo, "has taken a fork");
+        print_log(philo, "is taken a fork");
         pthread_mutex_lock(philo->right_fork);
-        print_log(philo, "has taken a fork");
+        print_log(philo, "is taken a fork");
     }
     else
     {
         pthread_mutex_lock(philo->right_fork);
-        print_log(philo, "has taken a fork");
+        print_log(philo, "is taken a fork");
         pthread_mutex_lock(philo->left_fork);
-        print_log(philo, "has taken a fork");
+        print_log(philo, "is taken a fork");
     }
 }
 
