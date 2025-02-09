@@ -33,8 +33,17 @@ int main(int argc, char *argv[])
     if (argc != 5 && argc != 6)
         return 0;
     if (init_vars(argc, argv, &data) == 1)
-        return (free(data.philosophers), 0); 
-    return (create_philos(&data), all_destroy(&data), 0);
+        return (free(data.philosophers), 0);
+    
+    if (create_philos(&data) == -1)
+        return (1);
+        
+    // Kısa bir bekleme ekle
+    usleep(100);
+    
+    // Temizlik yap
+    all_destroy(&data);
+    return (0);
 }
 
 // ./philo <number_of_philosophers> <time_to_die> <time_to_eat> <time_to_sleep> ?<number_of_times_each_philosopher_must_eat>
