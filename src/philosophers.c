@@ -41,6 +41,10 @@ void	*philo_routine(void *arg)
 	while (!philo->data->end_simulation)
 	{
 		print_log(philo, "is thinking");
+		
+		if (philo->data->end_simulation)
+		    break;
+		    
 		philo_is_eating(philo);
 		
 		if (philo->data->end_simulation)
@@ -51,7 +55,6 @@ void	*philo_routine(void *arg)
 		}
 		
 		print_log(philo, "is eating");
-		philo->last_meal_time = get_time_ms();
 		philo->meals_eaten++;
 		custom_sleep(philo->data->time_to_eat);
 		pthread_mutex_unlock(philo->left_fork);
@@ -59,9 +62,12 @@ void	*philo_routine(void *arg)
 		
 		if (philo->data->end_simulation)
 		    break;
-		    
+			
 		print_log(philo, "is sleeping");
 		custom_sleep(philo->data->time_to_sleep);
+		
+		if (philo->data->end_simulation)
+		    break;
 	}
 	return (NULL);
 }
@@ -81,27 +87,42 @@ void    *monitor_routine(void *arg)
             if (get_time_ms() - data->philosophers[i].last_meal_time > data->time_to_die)
             {
                 pthread_mutex_lock(&data->print_lock);
-                data->end_simulation = 1;  // Önce flag'i set et
+                data->end_simulation = 1;
                 printf(RED"%ld %d died\n"RESET, get_time_ms() - data->start_time, 
                     data->philosophers[i].id);
                 pthread_mutex_unlock(&data->print_lock);
                 
-                // Tüm filozofların işlerini bitirmesini bekle
-                while (1)
+                // Tüm thread'leri zorla durdur
+                for (int j = 0; j < data->num_philosophers; j++)
                 {
-                    int all_done = 1;
-                    for (int j = 0; j < data->num_philosophers; j++)
-                    {
-                        if (pthread_join(data->philosophers[j].thread, NULL) == 0)
-                            all_done = 0;
-                    }
-                    if (all_done)
-                        break;
-                    usleep(1000);
+                    pthread_mutex_unlock(&data->forks[j]);  // Tüm çatalları serbest bırak
                 }
+                
+                // Tüm mutex'leri unlock et
+                pthread_mutex_unlock(&data->print_lock);
+                
                 return (NULL);
             }
             i++;
+        }
+        
+        // Yemek sayısı kontrolü
+        if (data->num_meals > 0)
+        {
+            int all_ate = 1;
+            for (int j = 0; j < data->num_philosophers; j++)
+            {
+                if (data->philosophers[j].meals_eaten < data->num_meals)
+                {
+                    all_ate = 0;
+                    break;
+                }
+            }
+            if (all_ate)
+            {
+                data->end_simulation = 1;
+                return (NULL);
+            }
         }
         usleep(100);
     }

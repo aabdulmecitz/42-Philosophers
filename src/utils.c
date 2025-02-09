@@ -36,6 +36,10 @@ void    custom_sleep(int ms)
 void    print_log(t_philo *philo, char *msg)
 {
     pthread_mutex_lock(&philo->data->print_lock);
-	printf(CYAN"%zu %d %s\n"RESET, get_time_ms() - philo->data->start_time, philo->id, msg);
-	pthread_mutex_unlock(&philo->data->print_lock);
+    if (!philo->data->end_simulation)  // Sadece simülasyon devam ediyorsa yazdır
+    {
+        printf(CYAN"%ld %d %s\n"RESET, get_time_ms() - philo->data->start_time, 
+            philo->id, msg);
+    }
+    pthread_mutex_unlock(&philo->data->print_lock);
 }	

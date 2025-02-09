@@ -76,9 +76,8 @@ int create_philos(t_data *data)
     initialize_forks(data);
     
     data->start_time = get_time_ms();
-    if (pthread_create(&monitor_thread, NULL, monitor_routine, data))
-        return -1;
     
+    // Önce filozofları oluştur
     while (i < data->num_philosophers)
     {
         data->philosophers[i].id = i + 1;
@@ -90,11 +89,23 @@ int create_philos(t_data *data)
         if (pthread_create(&data->philosophers[i].thread, NULL, \
                 &philo_routine, &(data->philosophers[i])))
             return -1;
-        pthread_detach(data->philosophers[i].thread);
         i++;
     }
+
+    // Sonra monitor thread'i oluştur
+    if (pthread_create(&monitor_thread, NULL, monitor_routine, data))
+        return -1;
     
+    // Monitor thread'i bekle
     pthread_join(monitor_thread, NULL);
+    
+    // Monitor thread bittiğinde tüm filozofları bekle
+    i = 0;
+    while (i < data->num_philosophers)
+    {
+        pthread_join(data->philosophers[i].thread, NULL);
+        i++;
+    }
     
     return (0);
 }
