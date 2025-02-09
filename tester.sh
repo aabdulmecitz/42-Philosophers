@@ -119,12 +119,27 @@ validate_meals() {
 
 # Test senaryoları
 declare -a test_cases=(
-    "single_philo 1 800 200 200 validate_death 800"
-    "five_philos 5 800 200 200 validate_no_death"
-    "five_philos_meals 5 800 200 200 7 validate_meals 35"
-    "four_philos 4 410 200 200 validate_no_death"
-    "death_test 4 310 200 100 validate_death 310"
-    "two_philos 2 800 200 200 validate_no_death"
+    # Temel test senaryoları
+    "basic_one_philo 1 800 200 200 validate_death 800"
+    "basic_two_philos 2 800 200 200 validate_no_death"
+    "basic_three_philos 3 800 200 200 validate_no_death"
+    "basic_four_philos 4 800 200 200 validate_no_death"
+    "basic_five_philos 5 800 200 200 validate_no_death"
+    
+    # Ölüm test senaryoları
+    "death_one_philo 1 200 200 200 validate_death 200"
+    "death_test_1 4 310 200 100 validate_death 310"
+    "death_test_2 4 200 205 200 validate_death 200"
+    
+    # Yemek sayısı test senaryoları
+    "meals_test_1 5 800 200 200 7 validate_meals 35"
+    "meals_test_2 4 410 200 200 10 validate_meals 40"
+    "meals_test_3 3 610 200 200 5 validate_meals 15"
+    
+    # Sınır değer test senaryoları
+    "edge_case_1 2 400 200 200 validate_no_death"
+    "edge_case_2 3 400 100 100 validate_no_death"
+    "edge_case_3 4 400 150 150 validate_no_death"
 )
 
 # Testleri çalıştır

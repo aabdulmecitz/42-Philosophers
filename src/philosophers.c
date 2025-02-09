@@ -25,25 +25,35 @@ static void philo_is_eating(t_philo *philo)
         return;
     }
 
-    // Normal durum için mevcut kod
-    if (philo->id % 2 == 1)
+    // Çatalları ID'ye göre sıralı kilitleme
+    if (philo->id % 2 == 0)
     {
-        pthread_mutex_lock(philo->left_fork);
-        print_log(philo, "has taken a fork");
         pthread_mutex_lock(philo->right_fork);
+        print_log(philo, "has taken a fork");
+        pthread_mutex_lock(philo->left_fork);
         print_log(philo, "has taken a fork");
     }
     else
     {
-        usleep(500);
-        pthread_mutex_lock(philo->right_fork);
-        print_log(philo, "has taken a fork");
         pthread_mutex_lock(philo->left_fork);
         print_log(philo, "has taken a fork");
+        pthread_mutex_lock(philo->right_fork);
+        print_log(philo, "has taken a fork");
     }
-    print_log(philo, "is eating");
-    philo->last_meal_time = get_time_ms();
-    philo->meals_eaten++;
+
+    pthread_mutex_lock(&philo->data->print_lock);
+    if (!philo->data->end_simulation)
+    {
+        philo->last_meal_time = get_time_ms();
+        printf(CYAN"%ld %d is eating\n"RESET, 
+            get_time_ms() - philo->data->start_time, philo->id);
+        philo->meals_eaten++;
+    }
+    pthread_mutex_unlock(&philo->data->print_lock);
+    
+    custom_sleep(philo->data->time_to_eat);
+    pthread_mutex_unlock(philo->right_fork);
+    pthread_mutex_unlock(philo->left_fork);
 }
 
 void	*philo_routine(void *arg)
@@ -51,19 +61,15 @@ void	*philo_routine(void *arg)
 	t_philo *philo;
 	
 	philo = (t_philo *)arg;
+	philo->last_meal_time = get_time_ms();
+	
 	if (philo->id % 2 == 0)
-		usleep(1000);
+		usleep(100);
+		
 	while (!philo->data->end_simulation)
 	{
 		print_log(philo, "is thinking");
-		if (philo->data->end_simulation)
-            break;
 		philo_is_eating(philo);
-		if (philo->data->end_simulation)
-            break;
-		custom_sleep(philo->data->time_to_eat);
-		pthread_mutex_unlock(philo->left_fork);
-		pthread_mutex_unlock(philo->right_fork);
 		if (philo->data->end_simulation)
             break;
 		print_log(philo, "is sleeping");
@@ -80,30 +86,35 @@ void    *monitor_routine(void *arg)
     long    current_time;
     
     data = (t_data *)arg;
+    usleep(100);
+    
     while (!data->end_simulation)
     {
         i = 0;
         all_ate_enough = 1;
-        while (i < data->num_philosophers && !data->end_simulation)
+        
+        while (i < data->num_philosophers)
         {
             current_time = get_time_ms();
-            if (current_time - data->philosophers[i].last_meal_time > data->time_to_die)
+            if ((current_time - data->philosophers[i].last_meal_time) > data->time_to_die)
             {
                 pthread_mutex_lock(&data->print_lock);
                 if (!data->end_simulation)
                 {
-                    printf(RED"%ld %d died\n"RESET, current_time - data->start_time, 
-                        data->philosophers[i].id);
+                    printf(RED"%ld %d died\n"RESET, 
+                        current_time - data->start_time, data->philosophers[i].id);
                     data->end_simulation = 1;
                 }
                 pthread_mutex_unlock(&data->print_lock);
                 return (NULL);
             }
+            
             if (data->num_meals > 0 && 
                 data->philosophers[i].meals_eaten < data->num_meals)
                 all_ate_enough = 0;
             i++;
         }
+        
         if (data->num_meals > 0 && all_ate_enough)
         {
             pthread_mutex_lock(&data->print_lock);
@@ -111,7 +122,7 @@ void    *monitor_routine(void *arg)
             pthread_mutex_unlock(&data->print_lock);
             return (NULL);
         }
-        usleep(500);
+        usleep(50);
     }
     return (NULL);
 }
