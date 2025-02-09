@@ -72,28 +72,35 @@ int create_philos(t_data *data)
     int	i;
     pthread_t monitor_thread;
     
-	i = 0;
+    i = 0;
     initialize_forks(data);
     
-	data->start_time = get_time_ms();
-	while (i < data->num_philosophers)
-	{
-		data->philosophers[i].id = i + 1;
-		data->philosophers[i].left_fork = &data->forks[i];
-		data->philosophers[i].right_fork = &data->forks[(i + 1) % data->num_philosophers];
-		data->philosophers[i].data = data;
-		data->philosophers[i].last_meal_time = get_time_ms();
-		data->philosophers[i].meals_eaten = 0;
+    data->start_time = get_time_ms();
+    if (pthread_create(&monitor_thread, NULL, monitor_routine, data))
+        return -1;
+
+    while (i < data->num_philosophers)
+    {
+        data->philosophers[i].id = i + 1;
+        data->philosophers[i].left_fork = &data->forks[i];
+        data->philosophers[i].right_fork = &data->forks[(i + 1) % data->num_philosophers];
+        data->philosophers[i].data = data;
+        data->philosophers[i].last_meal_time = get_time_ms();
+        data->philosophers[i].meals_eaten = 0;
         if (pthread_create(&data->philosophers[i].thread, NULL, \
-				&philo_routine, &(data->philosophers[i])))
+                &philo_routine, &(data->philosophers[i])))
             return -1;
-		i++;
-	}
-    pthread_create(&monitor_thread, NULL, monitor_routine, data);
-    i = -1;
-	while (++i < data->num_philosophers)
-		if (pthread_join(data->philosophers[i].thread, NULL) != 0)
-			return (-1);
+        i++;
+    }
+    
     pthread_join(monitor_thread, NULL);
-	return (0);
+    
+    i = 0;
+    while (i < data->num_philosophers)
+    {
+        pthread_detach(data->philosophers[i].thread);
+        i++;
+    }
+    
+    return (0);
 }

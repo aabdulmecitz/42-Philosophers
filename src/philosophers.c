@@ -56,27 +56,26 @@ void    *monitor_routine(void *arg)
     t_data *data;
     int i;
     data = (t_data *)arg;
-    while ((data->end_simulation) == 0)
+    
+    while (1)
     {
         i = 0;
         while (i < data->num_philosophers)
         {
-            if (get_time_ms() - data->philosophers[i].last_meal_time > \
-data->time_to_die)
+            if (get_time_ms() - data->philosophers[i].last_meal_time > data->time_to_die)
             {
-                print_log(&(data->philosophers[i]),"died");
-                (data->end_simulation) = 1;
-                break;
-            }
-            if (data->num_meals > 0 && 
-            data->philosophers[i].meals_eaten >= data->num_meals)
-            {
-                (data->end_simulation) = 1;
-                break;
+                pthread_mutex_lock(&data->print_lock);
+                printf(RED"%ld %d died\n"RESET, get_time_ms() - data->start_time, 
+                    data->philosophers[i].id);
+                data->end_simulation = 1;
+                pthread_mutex_unlock(&data->print_lock);
+                return (NULL);
             }
             i++;
         }
-        usleep(1000);
+        if (data->end_simulation)
+            return (NULL);
+        usleep(100);
     }
     return (NULL);
 }
