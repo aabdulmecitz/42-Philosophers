@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 04:24:23 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/12 11:46:17 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/12 13:53:57 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,8 @@ void	*philo_routine(void *arg)
 	
 	philo = (t_philo *)arg;
 	philo->last_meal_time = get_time_ms();
-	
 	if (philo->id % 2 == 0)
 		usleep(100);
-		
 	while (!philo->data->end_simulation)
 	{
 		print_log(philo, "is thinking");
@@ -87,12 +85,10 @@ void    *monitor_routine(void *arg)
     
     data = (t_data *)arg;
     usleep(100);
-    
     while (!data->end_simulation)
     {
         i = 0;
         all_ate_enough = 1;
-        
         while (i < data->num_philosophers)
         {
             current_time = get_time_ms();
@@ -108,13 +104,11 @@ void    *monitor_routine(void *arg)
                 pthread_mutex_unlock(&data->print_lock);
                 return (NULL);
             }
-            
             if (data->num_meals > 0 && 
                 data->philosophers[i].meals_eaten < data->num_meals)
                 all_ate_enough = 0;
             i++;
         }
-        
         if (data->num_meals > 0 && all_ate_enough)
         {
             pthread_mutex_lock(&data->print_lock);
