@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:32 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/19 05:37:42 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/19 06:34:58 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <fcntl.h>
+#include <signal.h>
+#include <sys/wait.h>
+
 
 # define PHILO_MAX 300
 # define INT_MAX 2147483647
@@ -48,6 +51,7 @@ typedef struct s_data
 typedef struct s_philo
 {
 	int					id;
+	pid_t				pid;
 	int					meals_eaten;
 	long long			last_meal_time;
 	struct s_data		*data;
@@ -57,8 +61,9 @@ int init_vars(int argc, char *argv[], t_data *data);
 int create_philos(t_data *data);
 long ft_atol(const char *str);
 void	initialize_forks(t_data *data);
-void	*philo_routine(t_data *data);
 void    print_log(t_philo *philo, char *msg);
 void    custom_sleep(int ms);
 long    get_time_ms();
+void	*philo_routine(void *arg);
+
 #endif

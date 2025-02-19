@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:24:02 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/17 21:28:59 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/19 06:34:17 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,18 @@ void all_destroy(t_data *data)
 {
     int i;
 
-    i = 0;
-    while (i < data->num_philosophers)
-    {
-        kill();
-        i++;
-    }
-    // free(data->philosophers);
-    pthread_mutex_destroy(&data->print_lock);
+    i = -1;
+    while (++i < data->num_philosophers)
+        kill(data->philosophers[i].pid, SIGTERM);
+    i = -1;
+    while (++i < data->num_philosophers)
+        waitpid(data->philosophers[i].pid, NULL, 0);
+    sem_close(data->forks);
+    sem_close(data->print_lock);
+    sem_unlink("/forks");
+    sem_unlink("/print_lock");
+    free(data->philosophers);
+    exit(0);
 }
 
 int main(int argc, char *argv[])
@@ -38,5 +42,3 @@ int main(int argc, char *argv[])
         return (1);
     return (usleep(100), all_destroy(&data),0);
 }
-
-// 

@@ -13,7 +13,7 @@ NAME      		= philo
 BONUS_NAME      = philo_bonus
 
 FILES     = main philosophers init libft utils
-BONUS_FILES = main philo_bonus utils_bonus libft int
+BONUS_FILES = main philo_bonus utils_bonus libft init
 
 CC        = gcc
 CFLAGS    = -Wall -Wextra -Werror #-fsanitize=address
@@ -33,13 +33,18 @@ $(NAME): $(OBJS)
 	@echo "$(GREEN)-== $(NAME) compiled successfully! ==-$(DEFAULT)"
 	@$(RM) $(OBJS)
 
+$(SRC_DIR)%.o: $(SRC_DIR)%.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "$(BLUE)Compiling: $< $(DEFAULT)"
+
 $(BONUS_DIR)%.o: $(BONUS_DIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(BLUE)Compiling: $< $(DEFAULT)"
 
-$(SRC_DIR)%.o: $(SRC_DIR)%.c
-	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo "$(BLUE)Compiling: $< $(DEFAULT)"
+bonus: $(BONUS_OBJS)
+	@$(CC) $(CFLAGS) $(BONUS_OBJS) -o $(BONUS_NAME) -g
+	@echo "$(GREEN)-== $(BONUS_NAME) compiled successfully! ==-$(DEFAULT)"
+	@$(RM) $(BONUS_OBJS)
 
 clean:
 	@$(RM) $(OBJS) $(BONUS_OBJS)
@@ -57,27 +62,4 @@ push:
 
 re: fclean all
 
-run:
-	@echo "Running tests..."
-	@echo "----------------------------------------"
-	@echo "Test 1: 1 philosopher"
-	./$(NAME) 1 800 200 200
-	@echo "----------------------------------------"
-	# @echo "Test 2: 5 philosophers, 800ms death time EXPECTION: NO DIE"
-	# ./$(NAME) 5 800 200 200
-	@echo "----------------------------------------"
-	@echo "Test 3: 5 philosophers, 410ms death time EXPECTION: NO DIE"
-	./$(NAME) 5 410 200 200
-	@echo "----------------------------------------"
-	@echo "Test 4: 4 philosophers, 410ms death time, 10 meals"
-	./$(NAME) 4 410 200 200 10
-	@echo "----------------------------------------"
-	@echo "Test 5: 10 philosophers, 800ms death time EXPECTION: NO DIE"
-	./$(NAME) 10 800 200 200
-	@echo "----------------------------------------"
-	@echo "Test 6: 10 philosophers, 800ms death time, 5 meals"
-	./$(NAME) 10 800 200 200 5
-	@echo "----------------------------------------"
-	@echo "Tests completed."
-
-.PHONY: all clean fclean re push run
+.PHONY: all clean fclean re push

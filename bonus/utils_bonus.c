@@ -6,11 +6,11 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:11:57 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/17 21:48:37 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/19 06:38:08 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 #include <limits.h>
 
@@ -35,9 +35,9 @@ void    custom_sleep(int ms)
 
 void    print_log(t_philo *philo, char *msg)
 {
-    sem_wait(&philo->data->print_lock);
+    sem_wait(philo->data->print_lock);
     if (!philo->data->end_simulation)
         printf(CYAN"%ld %d %s\n"RESET, get_time_ms() - philo->data->start_time, 
             philo->id, msg);
-    sem_post(&philo->data->print_lock);
+    sem_post(philo->data->print_lock);
 }	

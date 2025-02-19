@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:51:25 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/19 06:04:51 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/19 06:26:58 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,12 @@ int create_philos(t_data *data)
         if (pid == 0)
         {
             philo_routine(&data->philosophers[i]);
+            data->philosophers[i].pid = getpid();
             exit(0);
         }        
     }
     i = -1;
     while (++i < data->num_philosophers)
-        wait(NULL);
+        waitpid(-1, NULL, 0);
     return (0);
 }
