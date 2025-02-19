@@ -33,7 +33,11 @@ $(NAME): $(OBJS)
 	@echo "$(GREEN)-== $(NAME) compiled successfully! ==-$(DEFAULT)"
 	@$(RM) $(OBJS)
 
-$(BONUS_SRCS)%.o: $(BONUS_OBJS)%.c
+$(BONUS_DIR)%.o: $(BONUS_DIR)%.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "$(BLUE)Compiling: $< $(DEFAULT)"
+
+$(SRC_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(BLUE)Compiling: $< $(DEFAULT)"
 
