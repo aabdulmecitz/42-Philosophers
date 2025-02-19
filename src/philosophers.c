@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 04:24:23 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/12 13:53:57 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/19 06:05:13 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void philo_is_eating(t_philo *philo)
 {
-    // Tek filozof durumu için özel kontrol
     if (philo->data->num_philosophers == 1)
     {
         pthread_mutex_lock(philo->left_fork);
@@ -24,8 +23,6 @@ static void philo_is_eating(t_philo *philo)
         pthread_mutex_unlock(philo->left_fork);
         return;
     }
-
-    // Çatalları ID'ye göre sıralı kilitleme
     if (philo->id % 2 == 0)
     {
         pthread_mutex_lock(philo->right_fork);
@@ -50,7 +47,6 @@ static void philo_is_eating(t_philo *philo)
         philo->meals_eaten++;
     }
     pthread_mutex_unlock(&philo->data->print_lock);
-    
     custom_sleep(philo->data->time_to_eat);
     pthread_mutex_unlock(philo->right_fork);
     pthread_mutex_unlock(philo->left_fork);
