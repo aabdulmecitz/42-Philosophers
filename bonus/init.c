@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:51:25 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/19 06:26:58 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/02/19 06:45:55 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int init_vars(int argc, char *argv[], t_data *data)
 	data->time_to_eat = ft_atol(argv[3]);
 	data->time_to_sleep = ft_atol(argv[4]);
     if (parse_error_check(data))
-        return (1);
+        return (2);
     if (argc == 6)
 	{
 		data->num_meals = ft_atol(argv[5]);
@@ -42,8 +42,6 @@ int init_vars(int argc, char *argv[], t_data *data)
 	}
 	else
 		data->num_meals = -1;
-    sem_unlink("/forks");
-    sem_unlink("/print_lock");
     data->forks = sem_open("/forks", O_CREAT, 0655, data->num_philosophers);
     data->print_lock = sem_open("/print_lock", O_CREAT, 0655, 1);
     if (data->forks == SEM_FAILED || data->print_lock == SEM_FAILED)
@@ -69,7 +67,7 @@ int create_philos(t_data *data)
         {
             philo_routine(&data->philosophers[i]);
             data->philosophers[i].pid = getpid();
-            exit(0);
+//            exit(0);
         }        
     }
     i = -1;
