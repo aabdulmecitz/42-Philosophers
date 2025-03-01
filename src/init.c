@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:51:25 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/01 02:53:20 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/01 03:08:07 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	initialize_forks(t_data *data)
 		pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
+	data->start_time = get_time_ms();
 }
 
 static int	parse_error_check(t_data *data)
@@ -71,7 +72,6 @@ int	create_philos(t_data *data)
 
 	i = -1;
 	initialize_forks(data);
-	data->start_time = get_time_ms();
 	while (++i < data->num_philosophers)
 	{
 		data->philosophers[i].id = i + 1;
