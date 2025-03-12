@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:46 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/12 12:06:34 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/12 14:07:49 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	all_destroy(t_data *data)
 		i++;
 	}
 	free(data->philosophers);
+	free(data->forks);
 	pthread_mutex_destroy(&data->print_lock);
 }
 
