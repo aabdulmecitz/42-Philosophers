@@ -6,27 +6,11 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 04:24:23 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/12 11:56:35 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/12 12:04:42 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static void	take_forks(t_philo *philo)
-{
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_lock(philo->right_fork);
-		print_log(philo, "has taken a fork");
-		pthread_mutex_lock(philo->left_fork);
-	}
-	else
-	{
-		pthread_mutex_lock(philo->left_fork);
-		print_log(philo, "has taken a fork");
-		pthread_mutex_lock(philo->right_fork);
-	}
-}
 
 static void	philo_is_eating(t_philo *philo)
 {
@@ -44,9 +28,8 @@ static void	philo_is_eating(t_philo *philo)
 	if (!philo->data->end_simulation)
 	{
 		philo->last_meal_time = get_time_ms();
-		printf(CYAN "%ld %d is eating\n" RESET,
-				get_time_ms() - philo->data->start_time,
-				philo->id);
+		printf(CYAN "%ld %d is eating\n" RESET, \
+			get_time_ms() - philo->data->start_time, philo->id);
 		philo->meals_eaten++;
 	}
 	pthread_mutex_unlock(&philo->data->print_lock);
@@ -83,8 +66,8 @@ static int	check_death(t_data *data, int i, long current_time)
 		pthread_mutex_lock(&data->print_lock);
 		if (!data->end_simulation)
 		{
-			printf(RED "%ld %d died\n" RESET, current_time - data->start_time,
-					data->philosophers[i].id);
+			printf(RED "%ld %d died\n" RESET, \
+				current_time - data->start_time, data->philosophers[i].id);
 			data->end_simulation = 1;
 		}
 		pthread_mutex_unlock(&data->print_lock);
@@ -102,7 +85,7 @@ static int	check_meals(t_data *data)
 	all_ate_enough = 1;
 	while (i < data->num_philosophers)
 	{
-		if (data->num_meals > 0 &&
+		if (data->num_meals > 0 && \
 			data->philosophers[i].meals_eaten < data->num_meals)
 			all_ate_enough = 0;
 		i++;
@@ -119,9 +102,9 @@ static int	check_meals(t_data *data)
 
 void	*monitor_routine(void *arg)
 {
-	t_data *data;
-	int i;
-	long current_time;
+	t_data	*data;
+	int		i;
+	long	current_time;
 
 	data = (t_data *)arg;
 	usleep(100);

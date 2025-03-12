@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:42 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/12 11:56:46 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/12 12:05:03 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	print_log(t_philo *philo, char *msg)
 	pthread_mutex_lock(&philo->data->print_lock);
 	if (!philo->data->end_simulation)
 	{
-		printf(CYAN "%ld %d %s\n" RESET, get_time_ms()
+		printf(CYAN "%ld %d %s\n" RESET, get_time_ms() \
 				- philo->data->start_time, philo->id, msg);
 	}
 	pthread_mutex_unlock(&philo->data->print_lock);

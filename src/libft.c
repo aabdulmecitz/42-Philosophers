@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:42:56 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/12 11:56:23 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/12 12:16:00 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ static int	is_digit(int c)
 long	ft_atol(const char *str)
 {
 	long	res;
-	int		is_negative;
+	int		is_neg;
 
 	res = 0;
-	is_negative = 0;
+	is_neg = 0;
 	if (!str || *str == '\0')
 		return (printf("Error: Input string is NULL or empty.\n"), -1);
 	if (*str == '-' || *str == '+')
 	{
 		if (*str == '-')
-			is_negative = 1;
+			is_neg = 1;
 		str++;
 	}
 	if (!is_digit(*str))
@@ -39,11 +39,11 @@ long	ft_atol(const char *str)
 	while (*str && is_digit(*str))
 	{
 		res = (res * 10) + (*str - '0');
-		if ((!is_negative && res > INT_MAX) || (is_negative && -res < INT_MIN))
+		if ((res > INT_MAX) || (res < INT_MIN))
 			return (printf("Error: Integer overflow.\n"), -1);
 		str++;
 	}
-	if (is_negative)
+	if (is_neg)
 		return (-res);
 	return (res);
 }

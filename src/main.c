@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:46 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/12 11:13:46 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/12 12:06:34 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,4 @@ int	main(int argc, char *argv[])
 	return (usleep(100), all_destroy(&data), 0);
 }
 
-// ./philo <number_of_philosophers> <time_to_die> <time_to_eat> <time_to_sleep> ?<number_of_times_each_philosopher_must_eat>
+// ./philo <num_philos> <time_to_die> <time_to_eat> <time_to_sleep> ?<num_eat>

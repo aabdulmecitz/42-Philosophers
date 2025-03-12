@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:51:25 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/12 11:56:18 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/12 12:09:22 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,20 @@ int	create_philos(t_data *data)
 	while (++i < data->num_philosophers)
 		pthread_join(data->philosophers[i].thread, NULL);
 	return (0);
+}
+
+void	take_forks(t_philo *philo)
+{
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_lock(philo->right_fork);
+		print_log(philo, "has taken a fork");
+		pthread_mutex_lock(philo->left_fork);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->left_fork);
+		print_log(philo, "has taken a fork");
+		pthread_mutex_lock(philo->right_fork);
+	}
 }
