@@ -6,12 +6,12 @@ GREEN    = \033[1;32m
 BLUE     = \033[1;36m
 ORANGE   = \033[38;5;208m
 
-SRC_DIR   = src/
+SRC_DIR   = ./
 NAME      = philo
 FILES     = main philosophers init libft utils
 
-CC        = gcc
-CFLAGS    = -Wall -Wextra -Werror # -fsanitize=address
+CC        = cc
+CFLAGS    = -Wall -Wextra -Werror # -fsanitize=address | fsanitize=thread
 RM        = rm -rf
 MAKEFLAGS += --no-print-directory
 
@@ -21,7 +21,7 @@ OBJS      = $(addprefix $(SRC_DIR), $(addsuffix .o, $(FILES)))
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -g
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@echo "$(GREEN)-== $(NAME) compiled successfully! ==-$(DEFAULT)"
 	@$(RM) $(OBJS)
 

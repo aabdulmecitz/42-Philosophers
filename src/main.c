@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:46 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/12 14:07:49 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/12 14:49:18 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,3 @@ int	main(int argc, char *argv[])
 		return (1);
 	return (usleep(100), all_destroy(&data), 0);
 }
-
-// ./philo <num_philos> <time_to_die> <time_to_eat> <time_to_sleep> ?<num_eat>

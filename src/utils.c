@@ -6,12 +6,11 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:42 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/12 12:05:03 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/12 14:31:39 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <limits.h>
 
 long	get_time_ms(void)
 {
