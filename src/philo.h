@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:32 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/07 19:00:28 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/12 11:56:31 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@
 # define INT_MIN -2147483648
 
 // Colors
-# define CYAN   "\033[1;36m"
-# define RED    "\033[1;31m"
-# define GREEN  "\033[1;32m"
+# define CYAN "\033[1;36m"
+# define RED "\033[1;31m"
+# define GREEN "\033[1;32m"
 # define YELLOW "\033[1;33m"
-# define RESET  "\033[0m"
+# define RESET "\033[0m"
 
 typedef struct s_data
 {
@@ -46,22 +46,22 @@ typedef struct s_data
 
 typedef struct s_philo
 {
-	int					id;
-	int					meals_eaten;
-	long long			last_meal_time;
-	pthread_t			thread;
-	pthread_mutex_t		*left_fork;
-	pthread_mutex_t		*right_fork;
-	struct s_data		*data;
+	int				id;
+	int				meals_eaten;
+	long long		last_meal_time;
+	pthread_t		thread;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+	struct s_data	*data;
 }					t_philo;
 
-int init_vars(int argc, char *argv[], t_data *data);
-int create_philos(t_data *data);
-long ft_atol(const char *str);
-void	initialize_forks(t_data *data);
-void	*philo_routine(void *arg);
-void    *monitor_routine(void *arg);
-void    print_log(t_philo *philo, char *msg);
-void    custom_sleep(int ms);
-long    get_time_ms();
+int					init_vars(int argc, char *argv[], t_data *data);
+int					create_philos(t_data *data);
+long				ft_atol(const char *str);
+void				initialize_forks(t_data *data);
+void				*philo_routine(void *arg);
+void				*monitor_routine(void *arg);
+void				print_log(t_philo *philo, char *msg);
+void				custom_sleep(int ms);
+long				get_time_ms(void);
 #endif

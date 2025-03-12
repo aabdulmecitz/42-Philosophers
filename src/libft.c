@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:42:56 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/12 11:13:19 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/12 11:56:23 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ long	ft_atol(const char *str)
 		str++;
 	}
 	if (is_negative)
-        return -res;
-    return res;
+		return (-res);
+	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:51:25 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/12 11:11:32 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/12 11:56:18 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static int	parse_error_check(t_data *data)
 		return (printf("Error: Time to sleep must be higher than 0.\n"), 1);
 	return (0);
 }
-
 
 int	init_vars(int argc, char *argv[], t_data *data)
 {
