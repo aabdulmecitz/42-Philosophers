@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:42:56 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/02/07 18:20:42 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/12 11:13:19 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,31 @@ static int	is_digit(int c)
 	return (0);
 }
 
-long ft_atol(const char *str)
+long	ft_atol(const char *str)
 {
-    long result = 0;
-    int is_negative = 0;
+	long	res;
+	int		is_negative;
 
-    if (!str || *str == '\0')
-        return (printf("Error: Input string is NULL or empty.\n"), -1);
-    if (*str == '-' || *str == '+') {
-        if (*str == '-') is_negative = 1;
-        str++;
-    }
-    if (!is_digit(*str))
-        return (printf("Error: Input contains invalid characters.\n"), -1);
-    while (*str && is_digit(*str)) {
-        result = (result * 10) + (*str - '0');
-        if ((!is_negative && result > INT_MAX) || 
-            (is_negative && -result < INT_MIN))
-            return (printf("Error: Integer overflow.\n"), -1);
-        str++;
-    }
-    return is_negative ? -result : result;
+	res = 0;
+	is_negative = 0;
+	if (!str || *str == '\0')
+		return (printf("Error: Input string is NULL or empty.\n"), -1);
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			is_negative = 1;
+		str++;
+	}
+	if (!is_digit(*str))
+		return (printf("Error: Input contains invalid characters.\n"), -1);
+	while (*str && is_digit(*str))
+	{
+		res = (res * 10) + (*str - '0');
+		if ((!is_negative && res > INT_MAX) || (is_negative && -res < INT_MIN))
+			return (printf("Error: Integer overflow.\n"), -1);
+		str++;
+	}
+	if (is_negative)
+        return -res;
+    return res;
 }
