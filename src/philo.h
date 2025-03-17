@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:32 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/12 12:04:03 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/18 01:26:30 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# define PHILO_MAX 300
+# define PHILO_MAX 500
 # define INT_MAX 2147483647
 # define INT_MIN -2147483648
 

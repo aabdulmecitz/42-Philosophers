@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:51:25 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/12 17:00:05 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/18 01:30:48 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	initialize_forks(t_data *data)
 	int	i;
 
 	i = 0;
-	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philosophers);
 	while (i < data->num_philosophers)
 	{
 		pthread_mutex_init(&data->forks[i], NULL);
@@ -102,6 +101,7 @@ void	take_forks(t_philo *philo)
 		pthread_mutex_lock(philo->right_fork);
 		print_log(philo, "has taken a fork");
 		pthread_mutex_lock(philo->left_fork);
+		usleep(100);
 	}
 	else
 	{
