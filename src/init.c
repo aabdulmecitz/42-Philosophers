@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:51:25 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/18 01:30:48 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/18 02:02:13 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ int	init_vars(int argc, char *argv[], t_data *data)
 	data->time_to_die = ft_atol(argv[2]);
 	data->time_to_eat = ft_atol(argv[3]);
 	data->time_to_sleep = ft_atol(argv[4]);
+	data->philosophers = malloc(sizeof(t_philo) * data->num_philosophers);
+	if (!data->philosophers)
+		return (printf("Error: Malloc failed.\n"), 1);
 	if (parse_error_check(data))
 		return (-2);
 	if (argc == 6)
@@ -58,7 +61,6 @@ int	init_vars(int argc, char *argv[], t_data *data)
 	else
 		return (printf("ERROR: Incorrect number of arguments.\n"), 2);
 	pthread_mutex_init(&data->print_lock, NULL);
-
 	return (0);
 }
 
@@ -67,9 +69,6 @@ int	create_philos(t_data *data)
 	int			i;
 	pthread_t	monitor_thread;
 
-	data->philosophers = malloc(sizeof(t_philo) * data->num_philosophers);
-	if (!(data->philosophers))
-		return (-1);
 	i = -1;
 	initialize_forks(data);
 	while (++i < data->num_philosophers)
