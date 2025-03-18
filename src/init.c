@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:51:25 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/18 02:02:13 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/18 05:43:35 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void	take_forks(t_philo *philo)
 		pthread_mutex_lock(philo->right_fork);
 		print_log(philo, "has taken a fork");
 		pthread_mutex_lock(philo->left_fork);
-		usleep(100);
 	}
 	else
 	{
