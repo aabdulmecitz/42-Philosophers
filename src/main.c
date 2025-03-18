@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:46 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/18 01:52:27 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/18 05:55:04 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ void	all_destroy(t_data *data)
 		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
-	free(data->philosophers);	
+	free(data->philosophers);
 	pthread_mutex_destroy(&data->print_lock);
 	pthread_mutex_unlock(&data->print_lock);
 }
 
 int	main(int argc, char *argv[])
 {
-	t_data	data;
-	pthread_mutex_t forks[PHILO_MAX];
-	t_philo philos[PHILO_MAX];
-	
+	t_data			data;
+	t_philo			philos[PHILO_MAX];
+	pthread_mutex_t	forks[PHILO_MAX];
+
 	data.forks = forks;
 	data.philosophers = philos;
 	if (argc != 5 && argc != 6)
