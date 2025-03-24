@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:42 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/12 14:31:39 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/18 10:09:55 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,28 @@ void	custom_sleep(int ms)
 void	print_log(t_philo *philo, char *msg)
 {
 	pthread_mutex_lock(&philo->data->print_lock);
-	if (!philo->data->end_simulation)
+	if (!get_end_simulation(philo->data))
 	{
 		printf(CYAN "%ld %d %s\n" RESET, get_time_ms() \
 				- philo->data->start_time, philo->id, msg);
 	}
 	pthread_mutex_unlock(&philo->data->print_lock);
+}
+
+int get_end_simulation(t_data *data)
+{
+	int i;
+
+	pthread_mutex_lock(&data->end_sim);
+	i = data->end_simulation;
+	pthread_mutex_unlock(&data->end_sim);
+	return (i);
+}
+
+int set_end_simulation(t_data *data, int value)
+{
+	pthread_mutex_lock(&data->end_sim);
+	data->end_simulation = value;
+	pthread_mutex_unlock(&data->end_sim);
+	return (value);
 }

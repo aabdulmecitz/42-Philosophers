@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:46 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/18 05:55:04 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/18 08:51:55 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	all_destroy(t_data *data)
 	i = 0;
 	while (i < data->num_philosophers)
 	{
-		pthread_mutex_unlock(&data->forks[i]);
 		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
 	free(data->philosophers);
+	pthread_mutex_destroy(&data->end_sim);
 	pthread_mutex_destroy(&data->print_lock);
-	pthread_mutex_unlock(&data->print_lock);
+
 }
 
 int	main(int argc, char *argv[])
@@ -38,9 +38,9 @@ int	main(int argc, char *argv[])
 	data.philosophers = philos;
 	if (argc != 5 && argc != 6)
 		return (0);
-	if (init_vars(argc, argv, &data) == -2)
-		return (0);
-	if (create_philos(&data) == -1)
+	if (init_vars(argc, argv, &data) == -1)
 		return (1);
+	if (create_philos(&data) == -1)
+		return (all_destroy(&data), 1);
 	return (usleep(100), all_destroy(&data), 0);
 }

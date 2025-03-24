@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:32 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/18 01:26:30 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/18 08:53:08 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_data
 	int				num_meals;
 	int				end_simulation;
 	long			start_time;
+	pthread_mutex_t	end_sim;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_lock;
 	struct s_philo	*philosophers;
@@ -58,12 +59,14 @@ typedef struct s_philo
 int					init_vars(int argc, char *argv[], t_data *data);
 int					create_philos(t_data *data);
 long				ft_atol(const char *str);
-void				initialize_forks(t_data *data);
+int					initialize_forks(t_data *data);
 void				*philo_routine(void *arg);
 void				*monitor_routine(void *arg);
 void				print_log(t_philo *philo, char *msg);
 void				custom_sleep(int ms);
 long				get_time_ms(void);
 void				take_forks(t_philo *philo);
+int get_end_simulation(t_data *data);
+int set_end_simulation(t_data *data, int value);
 
 #endif
