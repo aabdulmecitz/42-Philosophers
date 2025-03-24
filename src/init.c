@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:51:25 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/24 11:40:49 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:03:45 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	init_vars(int argc, char *argv[], t_data *data)
 		return (printf("ERROR: Incorrect number of arguments.\n"), 2);
 	pthread_mutex_init(&data->print_lock, NULL);
 	pthread_mutex_init(&data->end_sim, NULL);
+	pthread_mutex_init(&data->meal_lock, NULL);
 	data->end_simulation = set_end_simulation(data, 0);
 	return (0);
 }

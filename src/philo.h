@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:32 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/18 08:53:08 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:07:41 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_data
 	int				num_meals;
 	int				end_simulation;
 	long			start_time;
+	pthread_mutex_t	meal_lock;
 	pthread_mutex_t	end_sim;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_lock;
@@ -68,5 +69,7 @@ long				get_time_ms(void);
 void				take_forks(t_philo *philo);
 int get_end_simulation(t_data *data);
 int set_end_simulation(t_data *data, int value);
+int get_meal(t_data *data);
+int set_meal(t_data *data, int value);
 
 #endif
