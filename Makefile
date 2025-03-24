@@ -11,7 +11,7 @@ NAME      = philo
 FILES     = main philosophers init libft utils utils2
 
 CC        = cc
-CFLAGS    = -Wall -Wextra -Werror  #-fsanitize=thread -o1 -g
+CFLAGS    = -Wall -Wextra -Werror -I ./include -pthread
 RM        = rm -rf
 MAKEFLAGS += --no-print-directory
 

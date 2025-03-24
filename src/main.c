@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:46 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/24 14:06:54 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:23:25 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	all_destroy(t_data *data)
 	pthread_mutex_destroy(&data->end_sim);
 	pthread_mutex_destroy(&data->print_lock);
 	pthread_mutex_destroy(&data->meal_lock);
-
 }
 
 int	main(int argc, char *argv[])

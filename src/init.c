@@ -6,29 +6,29 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:51:25 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/24 14:03:45 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:30:49 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int initialize_forks(t_data *data)
+int	initialize_forks(t_data *data)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (i < data->num_philosophers)
-    {
-        if (pthread_mutex_init(&data->forks[i], NULL) != 0)
-        {
-            while (--i >= 0)
-                pthread_mutex_destroy(&data->forks[i]);
-            return (-1);
-        }
-        i++;
-    }
-    data->start_time = get_time_ms();
-    return (0);
+	i = 0;
+	while (i < data->num_philosophers)
+	{
+		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
+		{
+			while (--i >= 0)
+				pthread_mutex_destroy(&data->forks[i]);
+			return (-1);
+		}
+		i++;
+	}
+	data->start_time = get_time_ms();
+	return (0);
 }
 
 static int	parse_error_check(t_data *data)
@@ -82,33 +82,13 @@ int	create_philos(t_data *data)
 		return (-1);
 	while (++i < data->num_philosophers)
 	{
-		data->philosophers[i].id = i + 1;
-		data->philosophers[i].meals_eaten = data->num_meals;
-		data->philosophers[i].left_fork = &data->forks[i];
-		data->philosophers[i].right_fork = &data->forks[(i + 1)
-			% data->num_philosophers];
-		data->philosophers[i].data = data;
-		data->philosophers[i].last_meal_time = get_time_ms();
-		data->philosophers[i].meals_eaten = 0;
-		
-		// Add delay between thread creation
-		//usleep(100);
-		
+		init_philo_vals(data, i);
 		if (pthread_create(&data->philosophers[i].thread, NULL, &philo_routine,
 				&(data->philosophers[i])))
-		{
-			set_end_simulation(data, 1);
-			return (-1);
-		}
+			return (set_end_simulation(data, 1), -1);
 	}
-
-	//usleep(100); // Add delay before monitor thread
 	if (pthread_create(&monitor_thread, NULL, monitor_routine, data))
-	{
-		set_end_simulation(data, 1);
-		return (-1);
-	}
-
+		return (set_end_simulation(data, 1), -1);
 	pthread_join(monitor_thread, NULL);
 	i = -1;
 	while (++i < data->num_philosophers)

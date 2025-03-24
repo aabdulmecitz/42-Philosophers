@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:32 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/24 14:07:41 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:29:51 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,10 @@ void				print_log(t_philo *philo, char *msg);
 void				custom_sleep(int ms);
 long				get_time_ms(void);
 void				take_forks(t_philo *philo);
-int get_end_simulation(t_data *data);
-int set_end_simulation(t_data *data, int value);
-int get_meal(t_data *data);
-int set_meal(t_data *data, int value);
+int					get_end_simulation(t_data *data);
+int					set_end_simulation(t_data *data, int value);
+int					get_meal(t_data *data);
+int					set_meal(t_data *data, int value);
+int					init_philo_vals(t_data *data, int i);
 
 #endif
