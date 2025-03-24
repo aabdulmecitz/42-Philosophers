@@ -11,7 +11,7 @@ NAME      = philo
 FILES     = main philosophers init libft utils utils2
 
 CC        = cc
-CFLAGS    = -Wall -Wextra -Werror -I ./include -pthread
+CFLAGS    = -Wall -Wextra -Werror -I ./include
 RM        = rm -rf
 MAKEFLAGS += --no-print-directory
 
