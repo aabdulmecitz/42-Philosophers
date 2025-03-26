@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 04:24:23 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/24 14:09:31 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/24 15:07:30 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	philo_is_eating(t_philo *philo)
 		philo->last_meal_time = get_time_ms();
 		printf(CYAN "%ld %d is eating\n" RESET, \
 			get_time_ms() - philo->data->start_time, philo->id);
-		set_meal(philo->data, get_meal(philo->data) - 1);
+		philo->meals_eaten++;
 	}
 	pthread_mutex_unlock(&philo->data->print_lock);
 	custom_sleep(philo->data->time_to_eat);
@@ -84,13 +84,13 @@ static int	check_meals(t_data *data)
 	pthread_mutex_lock(&data->print_lock);
 	while (i < data->num_philosophers)
 	{
-		if (data->num_meals > 0 && \
-			data->philosophers[i].meals_eaten < data->num_meals)
+		if (get_meal(data) > 0 && \
+			data->philosophers[i].meals_eaten < get_meal(data))
 			all_ate_enough = 0;
 		i++;
 	}
 	pthread_mutex_unlock(&data->print_lock);
-	if (data->num_meals > 0 && all_ate_enough)
+	if (get_meal(data) > 0 && all_ate_enough)
 	{
 		set_end_simulation(data, 1);
 		return (1);

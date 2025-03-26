@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:51:25 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/24 14:30:49 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:42:45 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	create_philos(t_data *data)
 		return (-1);
 	while (++i < data->num_philosophers)
 	{
+		usleep(100);
 		init_philo_vals(data, i);
 		if (pthread_create(&data->philosophers[i].thread, NULL, &philo_routine,
 				&(data->philosophers[i])))

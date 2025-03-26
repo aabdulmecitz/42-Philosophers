@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:42 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/24 14:30:18 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:51:38 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	print_log(t_philo *philo, char *msg)
 int	init_philo_vals(t_data *data, int i)
 {
 	data->philosophers[i].id = i + 1;
-	data->philosophers[i].meals_eaten = data->num_meals;
+	data->philosophers[i].meals_eaten = 0;
 	data->philosophers[i].left_fork = &data->forks[i];
 	data->philosophers[i].right_fork = &data->forks[(i + 1)
 		% data->num_philosophers];
