@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:46 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/24 14:23:25 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/26 17:20:23 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char *argv[])
 	data.philosophers = philos;
 	if (argc != 5 && argc != 6)
 		return (0);
-	if (init_vars(argc, argv, &data) == -1)
+	if (init_vars(argc, argv, &data) == -2)
 		return (1);
 	if (create_philos(&data) == -1)
 		return (all_destroy(&data), 1);

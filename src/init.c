@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:51:25 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/24 14:42:45 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/03/26 17:18:56 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ int	init_vars(int argc, char *argv[], t_data *data)
 	data->time_to_sleep = ft_atol(argv[4]);
 	data->philosophers = malloc(sizeof(t_philo) * data->num_philosophers);
 	if (!data->philosophers)
-		return (printf("Error: Malloc failed.\n"), 1);
+		return (printf("Error: Malloc failed.\n"), -2);
 	if (parse_error_check(data))
 		return (-2);
 	if (argc == 6)
 	{
 		data->num_meals = ft_atol(argv[5]);
 		if (data->num_meals <= 0)
-			return (printf("Error: Num of meals must be higher than 0.\n"), 2);
+			return (printf("Error: Num of meals must be higher than 0.\n"), -2);
 	}
 	else if (argc == 5)
 		data->num_meals = 0;
