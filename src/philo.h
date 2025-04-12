@@ -6,7 +6,7 @@
 /*   By: aozkaya <aozkaya@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:32 by aozkaya           #+#    #+#             */
-/*   Updated: 2025/03/24 14:29:51 by aozkaya          ###   ########.fr       */
+/*   Updated: 2025/04/12 23:48:21 by aozkaya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ int					set_end_simulation(t_data *data, int value);
 int					get_meal(t_data *data);
 int					set_meal(t_data *data, int value);
 int					init_philo_vals(t_data *data, int i);
+int					all_is_digit(char *argv[]);
 
 #endif
